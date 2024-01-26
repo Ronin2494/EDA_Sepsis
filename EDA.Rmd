@@ -1,0 +1,130 @@
+---
+title: "EDA"
+author: "Deepak"
+date: "2023-11-25"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+
+#### 1. First Feel of the data
+
+```{r sepsis_df, include=FALSE}
+  library(tidyverse)
+  library(skimr)
+  library(summarytools)
+  sepsis_df <- read_csv("sepsis.csv", show_col_types = F)
+```
+
+```{r echo=FALSE}
+  head(sepsis_df)
+```
+
+
+```{r sepsis, echo=FALSE}
+  str(sepsis_df)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r echo=FALSE}
+dim(sepsis_df)
+```
+
+
+```{r echo=FALSE}
+summary(sepsis_df)
+```
+So, we have 3 categorical variables and 6 continuous variables.
+
+```{r echo=FALSE}
+skim(sepsis_df)
+```
+```{r echo=FALSE}
+skim_without_charts(sepsis_df)
+```
+
+
+```{r echo=FALSE}
+dfSummary(sepsis_df) %>%
+  view()
+```
+
+```{r eval=FALSE, include=FALSE}
+vis_dat(sepsis_df)
+```
+```{r echo=FALSE}
+vis_miss(sepsis_df)
+```
+
+```{r echo=FALSE}
+  select(5,6,8,9)
+  head(sepsis_num_df,6)
+```
+
+```{r echo=FALSE}
+vis_cor(sepsis_num_df)
+```
+
+```{r echo=FALSE}
+sepsis_df %>%
+  ggplot(mapping = aes(x = fate, alpha = 0.1)) +
+  geom_bar(fill = "red") +
+  theme_minimal()
+```
+
+```{r}
+View(sepsis_df)
+```
+
+
+```{r eval=FALSE, include=FALSE}
+eda_paged_report(sepsis_df, output_format = "pdf")
+```
+
+```{r echo=FALSE}
+plot_intro(sepsis_df)
+```
+
+```{r}
+plot_missing(sepsis_df)
+```
+```{r}
+plot_histogram(sepsis_num_df)
+```
+
+```{r}
+plot_correlation(na.omit(sepsis_df))
+```
+
+```{r eval=FALSE, include=FALSE}
+create_report(sepsis_df)
+```
+###### Feature Engineering functions, Transform character based columns into factors
+
+```{r}
+sepsis_df %>%
+  mutate_if(is.character, as.factor)
+```
+From dataexplorer, mutate and update to change colum names
+
+```{r}
+update_columns(sepsis_df, c("treat", "race"), as.factor)
+```
+Dummify from dataexplorer package works like spread to change variables from categorical to numerical to replace it with a dummy varialble
+
+```{r}
+dummify(sepsis_df) 
+#or 
+dummify(sepsis_df, select = "treat") #columns to dummify
+```
+
+
+```{r eval=FALSE, include=FALSE}
+diagnose_paged_report(sepsis_df, output_format = "pdf") #from dlookr
+```
+
