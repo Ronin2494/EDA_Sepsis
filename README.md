@@ -12,9 +12,9 @@ Tidyverse\
 ggplot2\
 Visdat\
 skimr\
-summarytools\ 
+summarytools\
 tidyverse\
 dlookr\
-pretty doc\ 
+pretty doc\
 dataexplorer
 
